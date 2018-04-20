@@ -1,0 +1,19 @@
+{layout name="layout" /}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2 class="sub-header">添加用户</h2>
+    <form action="/user/store" method="post">
+        <div class="form-group">
+            <label for="name">User name</label>
+            <input type="test" class="form-control" id="name" placeholder="name" name="name">
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone" placeholder="phone" name="phone">
+        </div>
+        <button type="submit" class="btn btn-default">Submit</button>
+    </form>
+</div>

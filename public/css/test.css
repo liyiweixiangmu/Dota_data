@@ -1,0 +1,8 @@
+.sidebar {
+    position:fixed;
+    padding:20px;
+}
+.table>tbody>tr>td,
+.table>tbody>tr>th{
+    vertical-align: middle;
+}

@@ -1,0 +1,53 @@
+{layout name="layout" /}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2 class="sub-header">用户列表({$list->total()})</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Username</th>
+            <th>More</th>
+        </tr>
+        </thead>
+        <tbody>
+        {volist name="list" id="user"}
+        <tr>
+            <th scope="row">{$user.id}</th>
+            <td>{$user.name}</td>
+            <td>{$user.email}</td>
+            <td>{$user.phone}</td>
+            <td>
+                <div class="layui-btn-group">
+                    <a  class="layui-btn" href="/user/edit/{$user.id}">编辑</a>
+                    <!--<a  class="layui-btn delete" href="{:url('user/delete/'.$user.id)}">删除</a>-->
+                    <a  class="layui-btn delete" num="{$user.id}" onclick="del()">删除</a>
+                </div>
+            </td>
+        </tr>
+        {/volist}
+        </tbody>
+        <tfoot><tr></tr></tfoot>
+    </table>
+    {$list->render()}
+</div>
+
+<script>
+    $('.delete').click(function() {
+        var id = $(this).attr('num');
+        var a = $(this);
+        $.ajax({
+            type: "get",
+            url: "/user/delete/"+id,
+            success: function(msg){
+                a.parents('tr').remove();
+                layer.open({
+                    type: 0,
+                    title:'管理用户',
+                    content: msg //注意，如果str是object，那么需要字符拼接。
+                });
+            }
+        });
+    })
+</script>

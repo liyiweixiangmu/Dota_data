@@ -1,0 +1,146 @@
+{layout name="layout" /}
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2 class="sub-header">玩家信息</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>数字id</th>
+            <th>场均击杀数</th>
+            <th>场均助攻数</th>
+            <th>场均阵亡数</th>
+            <th>场均kda</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">{$user.player_id}</th>
+            <td>{$user.kills}</td>
+            <td>{$user.assists}</td>
+            <td>{$user.deaths}</td>
+            <td>{$user.kda|substr=0,4}</td>
+        </tr>
+        </tbody>
+        <thead>
+        <tr>
+            <th>场均 XPM</th>
+            <th>场均 GPM</th>
+            <th>总的比赛场次</th>
+            <th>总的比赛胜率</th>
+            <th>普通比赛胜率</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$user.xp_per_min}</td>
+            <td>{$user.gold_per_min}</td>
+            <td>{$user.matches_count}</td>
+            <td><?php echo (substr($user['win_rate']*100,0,5)); ?>%</td>
+            <td><?php echo (substr($user['normal_win_rate']*100,0,5)); ?>%</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h2 class="sub-header">最近一周</h2>
+    <table class="table table-striped">
+        <!--最近一周-->
+        <thead>
+        <tr>
+            <th>数字id</th>
+            <th>总场数</th>
+            <th>普通场次</th>
+            <th>普通胜场</th>
+            <th>周</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th scope="row">{$week.player_id}</th>
+            <td>{$week.matches_count}</td>
+            <td>{$week.normal_matches_count}</td>
+            <td>{$week.normal_win_count}</td>
+            <td>{$week.week}</td>
+        </tr>
+        </tbody>
+        <thead>
+        <tr>
+            <th>天梯场数</th>
+            <th>天梯胜场</th>
+            <th>场均击杀</th>
+            <th>场均助攻</th>
+            <th>场均阵亡</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>{$week.ranked_matches_count}</td>
+            <td>{$week.ranked_win_count}</td>
+            <td>{$week.kills}</td>
+            <td>{$week.assists}</td>
+            <td>{$week.deaths}</td>
+        </tr>
+        </tbody>
+        <!--最近一周-->
+    </table>
+</div>
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<h2 class="sub-header">最近一周英雄数据({$heros|count})</h2>
+<table class="table table-striped">
+    {volist name="heros" id="hero"}
+    <thead>
+        <tr>
+            <th>week</th>
+            <th>英雄名称</th>
+            <th>比赛场次</th>
+            <th>胜场</th>
+        </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">{$hero.week}</th>
+        <td>{$hero.hero_name}</td>
+        <td>{$hero.matches_count}</td>
+        <td>{$hero.win_count}</td>
+    </tr>
+    </tbody>
+    <thead>
+    <tr>
+        <th>场均击杀</th>
+        <th>场均助攻</th>
+        <th>场均阵亡</th>
+        <th>kda</th>
+        <th>胜率</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">{$hero.kills}</th>
+        <td>{$hero.assists}</td>
+        <td>{$hero.deaths}</td>
+        <td>{$hero.kda}</td>
+        <td><?php echo (substr($hero['win_rate']*100,0,5)); ?>%</td>
+    </tr>
+    </tbody>
+    {/volist}
+</table>
+</div>
+
+
+<script>
+    $('.delete').click(function() {
+        var id = $(this).attr('num');
+        var a = $(this);
+        $.ajax({
+            type: "get",
+            url: "/user/delete/"+id,
+            success: function(msg){
+                a.parents('tr').remove();
+                layer.open({
+                    type: 0,
+                    title:'管理用户',
+                    content: msg //注意，如果str是object，那么需要字符拼接。
+                });
+            }
+        });
+    })
+</script>
