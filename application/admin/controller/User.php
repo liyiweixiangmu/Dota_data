@@ -9,7 +9,9 @@
 namespace app\admin\controller;
 use app\admin\model\User as UserModel;
 use think\Controller;
+use think\Loader;
 use think\Request;
+use think\Validate;
 
 class User extends Controller
 {
@@ -21,7 +23,7 @@ class User extends Controller
 //        dump($user->toArray());
 
         // 分页
-        $list = UserModel::paginate(5);
+        $list = UserModel::order('id desc')->paginate(5);
         $this->assign('list',$list);
         $this->assign('count',count($list));
 
@@ -55,12 +57,33 @@ class User extends Controller
         dump($data);
 //        exit;
         $user = new UserModel;
-        if ( $user::create($data)){
+        $rule = [
+            'name' => 'require|max:25',
+            'email' => 'email',
+            'phone' => 'number|length:11',
+        ];
+
+        $message = [
+            'name.require' => '名称必须',
+            'name.max' => '名称最多不能超过25个字符',
+            'phone.number' => '电话号码必须是数字',
+            'phone.length' => '电话号码必须为11位',
+            'email' => '邮箱格式错误',
+        ];
+//        $validate = new Validate($rule, $message);
+        $validate = validate('user');
+//        if($validate->check($data)){
+        if ($validate->check($data)) {
+            if ($user::create($data)) {
 //            return '新增成功';
-            $this->redirect('/user');
-        }else{
-            return $user->getError();
+                $this->redirect('/user');
+            } else {
+                return $user->getError();
+            }
+        } else {
+            return $validate->getError();
         }
+
     }
 
     public function edit($id)

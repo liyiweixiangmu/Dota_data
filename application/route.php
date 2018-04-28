@@ -22,6 +22,8 @@ Route::get('user/delete/:id','admin/user/delete');
 Route::get('dota','dota/dota/index');
 
 Route::get('hero','dota/dota/hero');
+Route::get('user_hero','dota/dota/user_hero');
+Route::get('match','dota/dota/match');
 
 Route::get('test','admin/user/max');
 Route::get('xml','admin/user/xmltest');

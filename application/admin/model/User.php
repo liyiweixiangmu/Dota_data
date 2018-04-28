@@ -7,9 +7,11 @@
  * Time: 13:33
  */
 namespace app\admin\model;
+use think\Validate;
 use think\Model;
 
 class User extends Model
 {
     protected $table = 'user';
+
 }
