@@ -119,7 +119,14 @@ class User extends Controller
 
     public function max()
     {
-        echo $_SERVER['PATH_INFO'];
+        echo date("Y-m-d H:m:s",strtotime("now")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("10 September 2018")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("+1 day")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("+1 week")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("+1 week 2 days 4 hours 2 seconds")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("next Thursday")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("last Monday")), "<br>";
+        echo date("Y-m-d H:m:s",strtotime("20170808 23:00:01")), "<br>";
         exit;
         $a = ['a'=>1,'b'=>2,'c'=>3];
 //        echo(max($a));
